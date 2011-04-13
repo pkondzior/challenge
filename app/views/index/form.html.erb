@@ -60,9 +60,7 @@
             }
           },
           onError: function(event, name, error) {
-            console.log(event);
-            console.log(name);
-            console.log(error);
+            $('#status').text(error);
           }
         });
       });
