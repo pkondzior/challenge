@@ -1,9 +1,10 @@
 <h1>Challange</h1>
-<%= form_for @file_resource, {:html => {:multipart => true}, :remote => true, :url => root_url} do |f| %>
+<%= form_for @item, {:html => {:multipart => true}, :remote => true, :url => root_url} do |f| %>
   <div class="field">
     <%= f.label :title %>:
     <%= f.text_field :title %>
   </div>
+  <%= f.text_field :path %>
   <div class="field">
     <%= f.label :file %>:
     <%= f.file_field :file %>
@@ -15,25 +16,23 @@
 
 <script type="text/javascript">
   $(function() {
-    $("#upload_field").html5_upload({
-      url: function(number) {
-        return prompt(number + " url", "/");
-      },
+    $("#item_file").html5_upload({
+      url: '/upload',
       sendBoundary: window.FormData || $.browser.mozilla,
-      onStart: function(event, total) {
-        return confirm("You are trying to upload " + total + " files. Are you sure?");
-      },
-      setName: function(text) {
-        $("#progress_report_name").text(text);
-      },
-      setStatus: function(text) {
-        $("#progress_report_status").text(text);
-      },
-      setProgress: function(val) {
-        $("#progress_report_bar").css('width', Math.ceil(val * 100) + "%");
+      onProgress: function(name, progress) {
+        $("#status").text(Math.ceil(progress * 100) + '%');
       },
       onFinishOne: function(event, response, name, number, total) {
-//alert(response);
+        if ($.trim(response) == '') {
+          $('#status').text('upload error, try again');
+          $('#item_path').val('');
+        } else {
+          $('#status').text(response);
+          $('#item_path').val(response);
+        }
+      },
+      onError: function(val) {
+        $('There was an error while uploading a file, try again');
       }
     });
   });

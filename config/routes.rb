@@ -1,6 +1,10 @@
 Challange::Application.routes.draw do
   get "index/form"
+  post "index/upload"
+  post "index/show"
   root :to => "index#form"
+
+  match ':action', :controller => "index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,14 +1,21 @@
 class IndexController < ApplicationController
   def form
-    respond_to do |format|
-       @file_resource = FileResource.new
-      format.html do
+    @item = Item.new(params[:item])
+  end
 
-      end
-      format.js do
-
-      end
+  def upload
+    if params[:user_file] && params[:user_file].any? && params[:user_file].first.path
+      source = params[:user_file].first.path
+      dest = Rails.root.join('public', 'files', params[:user_file].first.original_filename)
+      FileUtils.cp(source, dest)
+      render(:text => dest)
+    else
+      render(:nothing => true)
     end
+  end
+
+  def show
+    @item = Item.new(params[:item])
   end
 
 end
