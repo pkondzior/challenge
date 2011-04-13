@@ -367,12 +367,12 @@ select:disabled {
 }
 
 html {
-  background: url(../img/bg-grain.png) #263748 repeat 0 0;
+  background: #263748 repeat 0 0;
   height: 100%;
 }
 
 html body {
-  background: url(../img/bg-grain.png) #263748 repeat 0 0;
+  background: #263748 repeat 0 0;
   height: 100%;
 }
 
@@ -543,7 +543,7 @@ html {
 }
 
 body {
-  background: url(../img/bg-sketchy-no-gradient.png) #e1e1e1 repeat-x 0 0 fixed;
+  background: #e1e1e1 repeat-x 0 0 fixed;
   font-weight: normal;
   font-family: "AxelRegular", "Lucida Grande", "Verdana", sans-serif;
   font-size: 16px;
@@ -578,7 +578,7 @@ a:visited {
 }
 
 #header {
-  background: url(../img/bg-grain.png) #263748 repeat 0 0;
+  background: #263748 repeat 0 0;
   padding: 0px 0;
 }
 

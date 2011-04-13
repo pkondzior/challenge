@@ -50,11 +50,13 @@
               $('#item_path').val(response);
               if ($.trim($('#item_title').val()) != '') {
                 $('#new_item').submit();
+              } else {
+                $('item_field').disable();
               }
             }
           },
-          onError: function(val) {
-            $('There was an error while uploading a file, try again');
+          onError: function(event, name, error) {
+            $('#status').text(error);
           }
         });
       });

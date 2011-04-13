@@ -100,6 +100,13 @@
           return;
         }
         var file = files[number];
+        // Fixed size limit
+        if (file.size > 26214400) {
+          $this.trigger('html5_upload.onError', [file.fileName, 'Max file size is 25MB']);
+          if (!options.stopOnFirstError) {
+            return upload_file(number + 1);
+          }
+        }
         if (!$this.triggerHandler('html5_upload.onStartOne', [file.fileName, number, total])) {
           return upload_file(number + 1);
         }
