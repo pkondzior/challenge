@@ -1,1 +1,10 @@
 == Challange Application
+
+Application after clone and bundle install should be available out of
+box. It supports only HTML5 compatible browsers (Firefox 3.5+, Chrome
+3+, Safari 4) because i base my progress indication solution on XHR 2
+so it wont be fully working under IE and other legacy browser.
+
+Files are uploaded into Rails.root('tmp/') because heroku is mostly
+Read Only FS clooud solution, so this is workaround to match application
+to the challenge specification.
