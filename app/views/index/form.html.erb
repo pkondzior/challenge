@@ -42,21 +42,27 @@
             $("#status").text(Math.ceil(progress * 100) + '%');
           },
           onFinishOne: function(event, response, name, number, total) {
-            if ($.trim(response) == '') {
+            responseObject = jQuery.parseJSON(response);
+            console.log(response);
+            if (jQuery.isEmptyObject(responseObject)) {
               $('#status').text('upload error, try again');
               $('#item_path').val('');
             } else {
-              $('#status').text(response);
-              $('#item_path').val(response);
-              if ($.trim($('#item_title').val()) != '') {
-                $('#new_item').submit();
+              if (responseObject.error_msg) {
+                $('#status').text(responseObject.error_msg)
               } else {
-                $('item_field').disable();
+                $('#status').text(responseObject.path);
+                $('#item_path').val(responseObject.path);
+                if ($.trim($('#item_title').val()) !== "") {
+                  $('#new_item').submit();
+                }
               }
             }
           },
           onError: function(event, name, error) {
-            $('#status').text(error);
+            console.log(event);
+            console.log(name);
+            console.log(error);
           }
         });
       });

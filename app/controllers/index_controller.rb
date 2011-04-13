@@ -8,10 +8,12 @@ class IndexController < ApplicationController
       source = params[:item][:file].path
       dest = Rails.root.join('tmp', params[:item][:file].original_filename)
       FileUtils.cp(source, dest)
-      render(:text => dest)
+      render(:json => dest)
     else
-      render(:nothing => true)
+      render(:json => {:error_msg => 'Upload form error, try again'}.to_json)
     end
+  rescue
+    render(:json => {:error_msg => 'Application Error'}.to_json)
   end
 
   def show
