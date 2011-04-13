@@ -10,9 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110413083434) do
+ActiveRecord::Schema.define(:version => 20110413120022) do
 
   create_table "file_resources", :force => true do |t|
+    t.string   "title"
+    t.text     "path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "items", :force => true do |t|
     t.string   "title"
     t.text     "path"
     t.datetime "created_at"

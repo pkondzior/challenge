@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FileResourceTest < ActiveSupport::TestCase
+class ItemTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true
