@@ -1,2 +1,14 @@
-<h1>Index#form</h1>
-<p>Find me in app/views/index/form.html.erb</p>
+<h1>Challange</h1>
+<%= form_for @file_resource, { :html => {:multipart => true}, :remote => true, :url => root_url } do |f| %>
+  <div class="field">
+    <%= f.label :title %>:
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :file %>:
+    <%= f.file_field :file %>
+  </div>
+  <div class="paragraph">
+    <%= f.label :status %>: <span id="status">select file</span>
+  </div>
+<% end %>

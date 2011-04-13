@@ -6,6 +6,11 @@
   <%= javascript_include_tag 'jquery.min', 'rails', 'jquery.form', 'jquery.remotipart' %>
   <%= csrf_meta_tag %>
 </head>
+<script>
+  $('form').bind("ajax:loading", function() {
+    alert('dupa');
+  });
+</script>
 <body>
 
 <%= yield %>
