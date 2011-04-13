@@ -1,4 +1,6 @@
 Challange::Application.routes.draw do
+  get "index/form"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
