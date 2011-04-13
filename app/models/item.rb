@@ -4,7 +4,6 @@ class Item
   include ActiveModel::Serialization
   include ActiveModel::Conversion
 
-
   define_attribute_methods [:title, :path]
   attr_accessor :title, :path
 
