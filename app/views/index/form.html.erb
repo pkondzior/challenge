@@ -1,39 +1,63 @@
-<h1>Challange</h1>
-<%= form_for @item, {:html => {:multipart => true}, :remote => true, :url => root_url} do |f| %>
-  <div class="field">
-    <%= f.label :title %>:
-    <%= f.text_field :title %>
-  </div>
-  <%= f.text_field :path %>
-  <div class="field">
-    <%= f.label :file %>:
-    <%= f.file_field :file %>
-  </div>
-  <div class="paragraph">
-    <%= f.label :status %>: <span id="status">select file</span>
-  </div>
-<% end %>
+<div id="content">
+  <div class="container">
+    <%= form_for @item, {:html => {:multipart => true}, :url => '/show'} do |f| %>
+      <div class="header field">
+        <h1>Challenge - Form</h1>
+      </div>
+      <div class="field">
+        <% unless @item.errors[:title].blank? %>
+          <ul class="errorlist">
+            <li>File must have a title</li>
+          </ul>
+        <% end %>
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+      </div>
+      <div class="field">
+        <% unless @item.errors[:path].blank? %>
+          <ul class="errorlist">
+            <li>Upload file first.</li>
+          </ul>
+        <% end %>
+        <%= f.label :file %>
+        <%= f.file_field :file %>
+      </div>
+      <div class="field">
+        <%= f.label :status %>
+        <span id="status">select file</span>
+      </div>
+      <div class="field">
+        <%= f.submit "Submit", :class => "green_button" %>
+        <%= f.hidden_field :path %>
+      </div>
+    <% end %>
 
-<script type="text/javascript">
-  $(function() {
-    $("#item_file").html5_upload({
-      url: '/upload',
-      sendBoundary: window.FormData || $.browser.mozilla,
-      onProgress: function(name, progress) {
-        $("#status").text(Math.ceil(progress * 100) + '%');
-      },
-      onFinishOne: function(event, response, name, number, total) {
-        if ($.trim(response) == '') {
-          $('#status').text('upload error, try again');
-          $('#item_path').val('');
-        } else {
-          $('#status').text(response);
-          $('#item_path').val(response);
-        }
-      },
-      onError: function(val) {
-        $('There was an error while uploading a file, try again');
-      }
-    });
-  });
-</script>
+    <script type="text/javascript">
+      $(function() {
+        $("#item_file").html5_upload({
+          fieldName: 'item[file]',
+          url: '/upload',
+          sendBoundary: window.FormData || $.browser.mozilla,
+          onProgress: function(name, progress) {
+            $("#status").text(Math.ceil(progress * 100) + '%');
+          },
+          onFinishOne: function(event, response, name, number, total) {
+            if ($.trim(response) == '') {
+              $('#status').text('upload error, try again');
+              $('#item_path').val('');
+            } else {
+              $('#status').text(response);
+              $('#item_path').val(response);
+              if ($.trim($('#item_title').val()) != '') {
+                $('#new_item').submit();
+              }
+            }
+          },
+          onError: function(val) {
+            $('There was an error while uploading a file, try again');
+          }
+        });
+      });
+    </script>
+  </div>
+</div>

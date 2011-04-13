@@ -6,14 +6,9 @@
   <%= javascript_include_tag 'jquery.min', 'rails', 'jquery.html5_upload' %>
   <%= csrf_meta_tag %>
 </head>
-<script>
-  $('form').bind("ajax:loading", function() {
-    alert('dupa');
-  });
-</script>
-<body>
-
-<%= yield %>
-
+<body class="">
+<div id="page">
+  <%= yield %>
+</div>
 </body>
 </html>
