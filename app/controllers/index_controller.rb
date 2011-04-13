@@ -6,7 +6,7 @@ class IndexController < ApplicationController
   def upload
     if params[:item] && params[:item][:file] && !params[:item][:file].blank?
       source = params[:item][:file].path
-      dest = Rails.root.join('public', 'files', params[:item][:file].original_filename)
+      dest = Rails.root.join('tmp', params[:item][:file].original_filename)
       FileUtils.cp(source, dest)
       render(:text => dest)
     else
