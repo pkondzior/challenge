@@ -24,7 +24,13 @@
       </div>
       <div class="field">
         <%= f.label :status %>
-        <span id="status">select file</span>
+        <span id="status">
+          <% if @item.path.blank? %>
+            select file
+          <% else %>
+            <%= @item.path %>
+          <% end %>
+        </span>
       </div>
       <div class="field">
         <%= f.submit "Submit", :class => "green_button" %>
