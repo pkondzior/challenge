@@ -200,7 +200,7 @@ html form .field {
 html form .field.header {
   background: #287fbc;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1777AF), color-stop(100%,#23538a));
-  background: -moz-linear-gradient(#287fbc, #024581);
+  background: -moz-linear-gradient(#1777AF, #23538a);
 }
 
 html form .field.header {
