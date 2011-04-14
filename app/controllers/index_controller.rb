@@ -4,13 +4,11 @@ class IndexController < ApplicationController
   end
 
   def upload
-    if params[:item] && params[:item][:file] && !params[:item][:file].blank?
-      dir = Rails.root.join('tmp')
-      dir.mkpath unless dir.exist?
-      source = params[:item][:file].path
-      dest = dir.join(params[:item][:file].original_filename)
-      FileUtils.cp(source, dest)
-      render(:json => dest)
+
+    if params[:item]
+      @item = Item.new(params[:item])
+      @item.save
+      render(:json => @item.path)
     else
       render(:json => {:error_msg => 'Upload form error, try again'}.to_json)
     end
@@ -23,6 +21,8 @@ class IndexController < ApplicationController
       @item = Item.new(params[:item])
       unless @item.valid?
         render('form')
+      else
+        @item.save
       end
     else
       redirect_to('/form')
