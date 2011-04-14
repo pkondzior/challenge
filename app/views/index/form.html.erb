@@ -51,7 +51,7 @@
             responseObject = jQuery.parseJSON(response);
             console.log(response);
             if (jQuery.isEmptyObject(responseObject)) {
-              $('#status').text('upload error, try again');
+              $('#status').text('JSON Response Empty');
               $('#item_path').val('');
             } else {
               if (responseObject.error_msg) {
