@@ -81,7 +81,7 @@
           $('#item_path').val('');
         } else {
           if (responseObject.error_msg) {
-            $('#status').text(responseObject.error_msg)
+            $('#status').text(responseObject.error_msg);
           } else {
             $('#status').text(responseObject.path);
             $('#item_path').val(responseObject.path);
