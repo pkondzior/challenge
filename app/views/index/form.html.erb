@@ -20,6 +20,7 @@
           </ul>
         <% end %>
         <%= f.label :file %>
+        <%#= link_to('Choose File', 'javascript:void', :id => 'item_file') %>
         <%= f.file_field :file %>
       </div>
       <div class="field">
@@ -39,37 +40,67 @@
     <% end %>
 
     <script type="text/javascript">
-      $(function() {
-        $("#item_file").html5_upload({
-          fieldName: 'item[file]',
-          url: '/upload',
-          sendBoundary: window.FormData || $.browser.mozilla,
-          onProgress: function(name, progress) {
-            $("#status").text(Math.ceil(progress * 100) + '%');
-          },
-          onFinishOne: function(event, response, name, number, total) {
-            responseObject = jQuery.parseJSON(response);
-            console.log(response);
-            if (jQuery.isEmptyObject(responseObject)) {
-              $('#status').text('JSON Response Empty');
-              $('#item_path').val('');
-            } else {
-              if (responseObject.error_msg) {
-                $('#status').text(responseObject.error_msg)
-              } else {
-                $('#status').text(responseObject.path);
-                $('#item_path').val(responseObject.path);
-                if ($.trim($('#item_title').val()) !== "") {
-                  $('#new_item').submit();
-                }
-              }
-            }
-          },
-          onError: function(event, name, error) {
-            $('#status').text(error);
-          }
-        });
+      // Custom example logic
+      var uploader = new plupload.Uploader({
+        runtimes : 'gears,html5,flash,silverlight,browserplus',
+        browse_button : 'item_file',
+        max_file_size : '25mb',
+        url : '/upload',
+        file_data_name : 'item[file]',
+        flash_swf_url : '/plupload.flash.swf',
+        silverlight_xap_url : '/plupload.silverlight.xap',
+        multi_selection : false
       });
+
+      uploader.bind('FilesAdded', function(up, files) {
+        console.log('File added, starting upload');
+        // This is dirty hack that need further investigation of plupload bug
+        // simple uploader.start(); will not invoke file uploading automatically
+        // I need to put this into idle, the funniest part of this bug is that I idle
+        // 0 microseconds :/ this can be PEBCAK, anti-use of lib or something is really broken
+        // in plupload
+        $('#item_path').val('');
+        setTimeout(function() {
+          uploader.start()
+        }, 0);
+      });
+
+
+      uploader.bind('UploadProgress', function(up, file) {
+        console.log('Uploading ' + file.percent + '%');
+        // Here is another dirty hack of plupload bug it appears that UploadProgress will be
+        // invoked 2x at 100% before and after FileUploaded invocation, it will not update
+        // progress if item[path] is already filled
+        if ($('#item_path').val().trim().length == 0) {
+          $("#status").text(file.percent + '%');
+        }
+      });
+
+      uploader.bind('FileUploaded', function(up, file, response) {
+        responseObject = jQuery.parseJSON(response.response);
+        console.log(responseObject);
+        if (jQuery.isEmptyObject(responseObject)) {
+          $('#status').text('JSON Response Empty');
+          $('#item_path').val('');
+        } else {
+          if (responseObject.error_msg) {
+            $('#status').text(responseObject.error_msg)
+          } else {
+            $('#status').text(responseObject.path);
+            $('#item_path').val(responseObject.path);
+            if ($.trim($('#item_title').val()) !== "") {
+              $('#new_item').submit();
+            }
+          }
+        }
+      });
+
+      uploader.bind('Error', function(up, error) {
+        $('#status').text(error.message);
+      });
+
+      uploader.init();
+
     </script>
   </div>
 </div>
