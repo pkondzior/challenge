@@ -53,7 +53,6 @@
       });
 
       uploader.bind('FilesAdded', function(up, files) {
-        console.log('File added, starting upload');
         // This is dirty hack that need further investigation of plupload bug
         // simple uploader.start(); will not invoke file uploading automatically
         // I need to put this into idle, the funniest part of this bug is that I idle
@@ -67,7 +66,6 @@
 
 
       uploader.bind('UploadProgress', function(up, file) {
-        console.log('Uploading ' + file.percent + '%');
         // Here is another dirty hack of plupload bug it appears that UploadProgress will be
         // invoked 2x at 100% before and after FileUploaded invocation, it will not update
         // progress if item[path] is already filled
@@ -78,7 +76,6 @@
 
       uploader.bind('FileUploaded', function(up, file, response) {
         responseObject = jQuery.parseJSON(response.response);
-        console.log(responseObject);
         if (jQuery.isEmptyObject(responseObject)) {
           $('#status').text('JSON Response Empty');
           $('#item_path').val('');
